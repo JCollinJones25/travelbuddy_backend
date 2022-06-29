@@ -7,9 +7,11 @@ const pool = require('./db')
 
 app.use(cors())
 
-app.get('/new', async(req, res, next) => {
+app.get('/trips', async(req, res, next) => {
     try{
-        res.render("new.ejs")
+        const getTrips = await pool.query("SELECT * FROM trip;")
+        const trips = res.json(getTrips.rows)
+        console.log(trips)
     } catch (error) {
         console.log(error);
         req.error = error;
@@ -20,3 +22,4 @@ app.get('/new', async(req, res, next) => {
 app.listen(PORT, function() {
     console.log(`Listening on PORT: ${PORT}`)
 })
+
