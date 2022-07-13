@@ -11,14 +11,14 @@ app.use(express.json())
 
 //create 
 
-app.post('/todos/new', async(req, res) => {
+app.post('/trips/new', async(req, res) => {
     try {
-        const { description } = req.body
-        const newTodo = await pool.query(
-            "INSERT INTO todo (description) VALUES($1) RETURNING *", 
-            [description]
+        const { location, hotel, flights, days, nights, activities, reservations } = req.body
+        const newTrip = await pool.query(
+            "INSERT INTO trip (location, hotel, flights, days, nights, activities, reservations) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
+            [location, hotel, flights, days, nights, activities, reservations]
         )
-        res.json(newTodo.rows[0])
+        res.json(newTrip.rows[0])
     } catch (err) {
         console.error(err.message);
     }
@@ -27,10 +27,10 @@ app.post('/todos/new', async(req, res) => {
 
 // get all
 
-app.get('/todos', async(req, res) => {
+app.get('/trips', async(req, res) => {
     try{
-        const getTodos = await pool.query("SELECT * FROM todo")
-        res.json(getTodos.rows)
+        const getTrips = await pool.query("SELECT * FROM trip")
+        res.json(getTrips.rows)
     } catch (err) {
         console.error(err.message);
     }
