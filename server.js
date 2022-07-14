@@ -64,6 +64,19 @@ app.put("/trips/:id", async (req, res) => {
 })
 
 
+// delete 
+
+app.delete("/trips/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const deleteTrip = await pool.query("DELETE FROM trip WHERE id = $1", [id])
+        res.json("Trip deleted")
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
+
 app.listen(PORT, function() {
     console.log(`Listening on PORT: ${PORT}`)
 })
