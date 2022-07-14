@@ -4,14 +4,14 @@ require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT
 const pool = require('./db')
-const { RowDescriptionMessage } = require('pg-protocol/dist/messages')
 
+//MIDDLEWARE
 app.use(cors())
 app.use(express.json())
 
+//ROUTES
 
-//create 
-
+//create trip
 app.post('/trips/new', async(req, res) => {
     try {
         const { location, hotel, flights, days, nights, activities, reservations } = req.body
@@ -25,9 +25,7 @@ app.post('/trips/new', async(req, res) => {
     }
 })
 
-
-// get all
-
+// get all trips
 app.get('/trips', async(req, res) => {
     try{
         const getTrips = await pool.query("SELECT * FROM trip")
@@ -37,8 +35,7 @@ app.get('/trips', async(req, res) => {
     }
 })
 
-// get a trip
-
+// get specific trip
 app.get("/trips/:id", async (req, res) => {
     try{
         const { id } = req.params
@@ -49,9 +46,7 @@ app.get("/trips/:id", async (req, res) => {
     }
 })
 
-
-// update trip
-
+// update 
 app.put("/trips/:id", async (req, res) => {
     try {
         const { id } = req.params
@@ -63,9 +58,7 @@ app.put("/trips/:id", async (req, res) => {
     }
 })
 
-
 // delete 
-
 app.delete("/trips/:id", async (req, res) => {
     try {
         const { id } = req.params
@@ -76,7 +69,7 @@ app.delete("/trips/:id", async (req, res) => {
     }
 })
 
-
+// server
 app.listen(PORT, function() {
     console.log(`Listening on PORT: ${PORT}`)
 })
