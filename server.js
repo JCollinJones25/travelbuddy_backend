@@ -4,6 +4,7 @@ require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT
 const pool = require('./db')
+const { RowDescriptionMessage } = require('pg-protocol/dist/messages')
 
 app.use(cors())
 app.use(express.json())
@@ -48,6 +49,19 @@ app.get("/trips/:id", async (req, res) => {
     }
 })
 
+
+// update trip
+
+app.put("/trips/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const { location, hotel, flights, days, nights, activities, reservations } = req.body 
+        const updateTrip = await pool.query("UPDATE trip SET location = $1, hotel = $2, flights = $3, days = $4, nights = $5, activities = $6, reservations = $7 WHERE id = $8", [location, hotel, flights, days, nights, activities, reservations, id])
+        res.json("Trip updated")
+    } catch (err) {
+        console.error(err.message)
+    }
+})
 
 
 app.listen(PORT, function() {
