@@ -36,6 +36,17 @@ app.get('/trips', async(req, res) => {
     }
 })
 
+// get a trip
+
+app.get("/trips/:id", async (req, res) => {
+    try{
+        const { id } = req.params
+        const trip = await pool.query("SELECT * FROM trip WHERE id = $1", [id])
+        res.json(trip.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+})
 
 
 
