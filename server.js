@@ -5,9 +5,11 @@ require('dotenv').config()
 const PORT = process.env.PORT
 const pool = require('./db')
 
+
 //MIDDLEWARE
 app.use(cors())
 app.use(express.json())
+
 
 //ROUTES
 
