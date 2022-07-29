@@ -16,10 +16,10 @@ app.use(express.json())
 //create trip
 app.post('/trips/new', async(req, res) => {
     try {
-        const { location, hotel, flights, days, nights, activities, reservations } = req.body
+        const { location, startdate, enddate, hotel, flights, days, nights, activities, reservations } = req.body
         const newTrip = await pool.query(
-            "INSERT INTO trip (location, hotel, flights, days, nights, activities, reservations) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", 
-            [location, hotel, flights, days, nights, activities, reservations]
+            "INSERT INTO trip (location, startdate, enddate, hotel, flights, days, nights, activities, reservations) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *", 
+            [location, startdate, enddate, hotel, flights, days, nights, activities, reservations]
         )
         res.json(newTrip.rows[0])
     } catch (err) {
@@ -52,8 +52,8 @@ app.get("/trips/:id", async (req, res) => {
 app.put("/trips/:id", async (req, res) => {
     try {
         const { id } = req.params
-        const { location, hotel, flights, days, nights, activities, reservations } = req.body 
-        const updateTrip = await pool.query("UPDATE trip SET location = $1, hotel = $2, flights = $3, days = $4, nights = $5, activities = $6, reservations = $7 WHERE id = $8", [location, hotel, flights, days, nights, activities, reservations, id])
+        const { location, startdate, enddate, hotel, flights, days, nights, activities, reservations } = req.body 
+        const updateTrip = await pool.query("UPDATE trip SET location = $1, startdate = $2, enddate = $3, hotel = $4, flights = $5, days = $6, nights = $7, activities = $8, reservations = $9 WHERE id = $10", [location, startdate, enddate, hotel, flights, days, nights, activities, reservations, id])
         res.json("Trip updated")
     } catch (err) {
         console.error(err.message)
