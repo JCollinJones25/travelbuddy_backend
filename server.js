@@ -14,7 +14,7 @@ app.use(express.json())
 //ROUTES
 
 //create trip
-app.post('/trips/new', async(req, res) => {
+app.post('/', async(req, res) => {
     try {
         const { location, date, hotel, flights, days, nights, activities, reservations } = req.body
         const newTrip = await pool.query(
@@ -28,7 +28,7 @@ app.post('/trips/new', async(req, res) => {
 })
 
 // get all trips
-app.get('/trips', async(req, res) => {
+app.get('/', async(req, res) => {
     try{
         const getTrips = await pool.query("SELECT * FROM trip")
         res.json(getTrips.rows)
@@ -38,7 +38,7 @@ app.get('/trips', async(req, res) => {
 })
 
 // get specific trip
-app.get("/trips/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
     try{
         const { id } = req.params
         const trip = await pool.query("SELECT * FROM trip WHERE id = $1", [id])
@@ -49,7 +49,7 @@ app.get("/trips/:id", async (req, res) => {
 })
 
 // update 
-app.put("/trips/:id", async (req, res) => {
+app.put("/:id", async (req, res) => {
     try {
         const { id } = req.params
         const { location, date, hotel, flights, days, nights, activities, reservations } = req.body 
@@ -61,7 +61,7 @@ app.put("/trips/:id", async (req, res) => {
 })
 
 // delete 
-app.delete("/trips/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params
         const deleteTrip = await pool.query("DELETE FROM trip WHERE id = $1", [id])
