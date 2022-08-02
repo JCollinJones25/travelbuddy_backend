@@ -2,13 +2,18 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 4000
 const pool = require('./db')
 
 
 //MIDDLEWARE
 app.use(cors())
 app.use(express.json())
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("../frontend/build"))
+} 
+
 
 
 //ROUTES
