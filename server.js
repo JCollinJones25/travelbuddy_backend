@@ -4,6 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const PORT = process.env.PORT || 4000
 const pool = require('./db')
+const bodyParser = require("body-parser")
 
 
 //MIDDLEWARE
