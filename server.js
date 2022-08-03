@@ -76,7 +76,7 @@ app.delete("/trips/:id", async (req, res) => {
 
 // catch all
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + './public/index.html'))
+    res.sendFile(path.join(__dirname + '/public/index.html'))
 })
 
 
