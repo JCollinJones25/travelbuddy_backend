@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const pool = require('./db')
+const path = require("path")
 const PORT = process.env.PORT || 4000
 
 //MIDDLEWARE
@@ -72,6 +73,12 @@ app.delete("/trips/:id", async (req, res) => {
         console.error(err.message)
     }
 })
+
+// catch all
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + './public/index.html'))
+})
+
 
 // server
 app.listen(PORT, function() {
