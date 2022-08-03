@@ -37,7 +37,7 @@ app.get("/trips/:id", async (req, res) => {
 })
 
 //create trip
-app.post('/trips', async(req, res) => {
+app.post('/trips/new', async(req, res) => {
     try {
         const { location, date, hotel, flights, days, nights, activities, reservations } = req.body
         const newTrip = await pool.query(
