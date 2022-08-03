@@ -2,37 +2,18 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
-const PORT = process.env.PORT || 4000
 const pool = require('./db')
-const bodyParser = require("body-parser")
-
+const PORT = process.env.PORT || 4000
 
 //MIDDLEWARE
 app.use(cors())
 app.use(express.json())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
-
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("public"))
 } 
 
 //ROUTES
-
-//create trip
-app.post('/trips', async(req, res) => {
-    try {
-        const { location, date, hotel, flights, days, nights, activities, reservations } = req.body
-        const newTrip = await pool.query(
-            "INSERT INTO trip (location, date, hotel, flights, days, nights, activities, reservations) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", 
-            [location, date, hotel, flights, days, nights, activities, reservations]
-        )
-        res.json(newTrip.rows[0])
-    } catch (err) {
-        console.error(err.message);
-    }
-})
 
 // get all trips
 app.get('/trips', async(req, res) => {
@@ -52,6 +33,20 @@ app.get("/trips/:id", async (req, res) => {
         res.json(trip.rows)
     } catch (err) {
         console.error(err.message)
+    }
+})
+
+//create trip
+app.post('/trips', async(req, res) => {
+    try {
+        const { location, date, hotel, flights, days, nights, activities, reservations } = req.body
+        const newTrip = await pool.query(
+            "INSERT INTO trip (location, date, hotel, flights, days, nights, activities, reservations) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", 
+            [location, date, hotel, flights, days, nights, activities, reservations]
+        )
+        res.json(newTrip.rows[0])
+    } catch (err) {
+        console.error(err.message);
     }
 })
 
