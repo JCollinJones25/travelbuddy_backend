@@ -2,6 +2,7 @@
 
 Built using the PERN stack, Travel Buddy is a full stack website to plan and organize your upcoming trips. It uses a React frontend to render data from a PostgreSQL database and an Express.js and Node.js backend for the server. 
 
+- The deployed site can be visited [here](https://travelbuddy-planner.netlify.app/)
 - Please visit [here](https://github.com/JCollinJones25/travelbuddy_frontend) to view the code for the frontend.
 
 ## Technologies Used
